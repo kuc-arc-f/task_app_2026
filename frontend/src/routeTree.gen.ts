@@ -20,6 +20,7 @@ import { Route as ProjectRouteImport } from './routes/project'
 import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as Task_itemRouteImport } from './routes/task_item'
+import { Route as ThreadRouteImport } from './routes/thread'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
@@ -78,6 +79,11 @@ const Task_itemRoute = Task_itemRouteImport.update({
   path: '/task_item',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ThreadRoute = ThreadRouteImport.update({
+  id: '/thread',
+  path: '/thread',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PathlessLayoutNestedLayoutRoute =
   PathlessLayoutNestedLayoutRouteImport.update({
     id: '/_nested-layout',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/signup': typeof SignupRoute
   '/task_item': typeof Task_itemRoute
+  '/thread': typeof ThreadRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/redirect': typeof RedirectRoute
   '/signup': typeof SignupRoute
   '/task_item': typeof Task_itemRoute
+  '/thread': typeof ThreadRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/signup': typeof SignupRoute
   '/task_item': typeof Task_itemRoute
+  '/thread': typeof ThreadRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/signup'
     | '/task_item'
+    | '/thread'
     | '/route-a'
     | '/route-b'
   fileRoutesByTo: FileRoutesByTo
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/signup'
     | '/task_item'
+    | '/thread'
     | '/route-a'
     | '/route-b'
   id:
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/signup'
     | '/task_item'
+    | '/thread'
     | '/_pathlessLayout/_nested-layout'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   RedirectRoute: typeof RedirectRoute
   SignupRoute: typeof SignupRoute
   Task_itemRoute: typeof Task_itemRoute
+  ThreadRoute: typeof ThreadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -281,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Task_itemRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/thread': {
+      id: '/thread'
+      path: '/thread'
+      fullPath: '/thread'
+      preLoaderRoute: typeof ThreadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_pathlessLayout/_nested-layout': {
       id: '/_pathlessLayout/_nested-layout'
       path: ''
@@ -347,6 +367,7 @@ const rootRouteChildren: RootRouteChildren = {
   RedirectRoute: RedirectRoute,
   SignupRoute: SignupRoute,
   Task_itemRoute: Task_itemRoute,
+  ThreadRoute: ThreadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

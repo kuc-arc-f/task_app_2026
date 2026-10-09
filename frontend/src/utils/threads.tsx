@@ -50,6 +50,46 @@ export const threadFetch = createServerFn({ method: 'POST' }).handler(async({dat
   return resp.data;
 })
 
+export const threadListChat = createServerFn({ method: 'POST' }).handler(async({data}) => {
+  console.info('Fetching posts...')
+  const sql = `SELECT 
+  "Thread".id as thread_id
+  ,"Thread"."chatId"
+  ,"Thread"."chatPostId"
+  ,"Thread"."userId"
+  ,"Thread".title
+  ,"Thread".body
+  ,"Thread"."createdAt"
+  ,"Thread"."updatedAt"
+  ,"User".name
+  FROM Thread
+  INNER JOIN "ChatPost" ON
+  ("Thread".chatPostId = "ChatPost".id)        
+  LEFT OUTER JOIN "User" ON
+  ("User".id = "Thread"."userId")
+  WHERE "Thread"."chatId" = ${data.chatId}
+  ORDER BY Thread.id DESC
+  LIMIT 1000
+  `;    
+  const sendData = {
+    action_name: "ex_chat_thread_list",
+    sql: sql,
+  };  
+  const response = await fetch(Config.EXTERNAL_API_URL + "/api/extra", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(sendData)
+  });
+  if (!response.ok) {
+    throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+  }
+  const result = await response.json();
+  const resp = JSON.parse(result.data)
+  console.log(resp.data);
+  return resp.data;
+})
 export const threadCreate = createServerFn({ method: 'POST' }).handler(async ({data}) => {
   console.info('Fetching createPost...')
   console.info(data)

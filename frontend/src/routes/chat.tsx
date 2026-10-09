@@ -443,7 +443,9 @@ export default function RouteComponent() {
           />
           <HeaderNavButton
             active={activeNav === 'Thread'}
-            onClick={() => setActiveNav('Thread')}
+            onClick={() => {
+              setActiveNav('Thread');
+            }}
             label={`Thread (${threadCount})`}
           />
           <HeaderNavButton
@@ -505,7 +507,16 @@ export default function RouteComponent() {
                 />
                 <SidebarNavButton
                   active={activeNav === 'Thread'}
-                  onClick={() => setActiveNav('Thread')}
+                  onClick={() => {
+                    setActiveNav('Thread')
+                    let currentUrl = window.location.href;
+                    if (currentUrl.includes("/chat?")) {
+                      currentUrl = currentUrl.substring(0, currentUrl.indexOf("/chat?"));
+                    }      
+                    let target = currentUrl+ "/thread?chat_id=" + chatId;          
+                    console.log("#thread=" + currentUrl+ "/thread?chat_id=" + chatId)
+                    location.href = target;
+                  }}
                   label="Thread"
                   count={threadCount}
                 />
