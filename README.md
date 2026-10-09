@@ -35,13 +35,6 @@ C++ Tanstack Start , Task App
 ![img1](/images/task_2_1.png)
 
 ***
-### related Server
-
-* DB Server, port: 8888
-
-https://github.com/kuc-arc-f/cpp_16ex/tree/main/db_mem11
-
-***
 ### related
 
 * tanstack Start
