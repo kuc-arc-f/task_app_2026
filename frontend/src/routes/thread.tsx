@@ -285,18 +285,26 @@ export default function RouteComponent() {
     return (
       posts.find((p) => p.id === selectedPostId) ||
       //filteredPosts[0] ||
-      posts[0] ||
+      //posts[0] ||
       null
     );
   }, [posts, selectedPostId, filteredPosts]);
 
   // Keep editing state synced when switching selected post
+  /*
   useEffect(() => {
     setIsEditingPost(false);
-    if (selectedPost) {
-      setEditingPostText(selectedPost.content);
+    console.log("296.selectedPostId=" ,selectedPostId)
+    console.log("selectedPost.id=" ,selectedPost?.id)
+    if(selectedPostId == 0){
+      setEditingPostText("");
+    }else{
+      if (selectedPost) {
+        setEditingPostText(selectedPost.content);
+      }
     }
   }, [selectedPost?.id]);
+  */
 
   const threadCount = useMemo(
     () => posts.filter((p) => p.replies.length > 0).length,
@@ -746,9 +754,13 @@ export default function RouteComponent() {
                       {/* Header metadata above the white post text box */}
                       <div className="flex items-center justify-between text-xs text-slate-700 tabular-nums">
                         <span className="font-semibold text-slate-900">
-                          {selectedPost.author} · {selectedPost.createdAt} , ID:{' '}
-                          {selectedPost.id}
+                          {selectedPostId && (selectedPostId > 0) ? (<>
+                            {selectedPost.author} · {selectedPost.createdAt} , ID:{' '}
+                            {selectedPost.id}                          
+                          </>
+                          ) : (<></>)}  
                         </span>
+                        {/*
                         <button
                           type="button"
                           onClick={() => {
@@ -760,6 +772,7 @@ export default function RouteComponent() {
                           <Edit3 className="w-3.5 h-3.5" />
                           <span>{isEditingPost ? 'キャンセル' : '編集'}</span>
                         </button>
+                        */}
                       </div>
 
                       {/* White Post Content Box (Matches large white box in right pane of ss1005a2.png) */}
